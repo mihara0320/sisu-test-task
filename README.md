@@ -54,25 +54,73 @@ Other configuration can be decided by yourself, based on the instance being used
  - Almost a day (8 hours-ish)
 
  2. What was the most difficult task?
-I kind of got stuck at following points:
- - GCP itself, navigating through GCP console, unfamiliar terminologies.
- - Wrapping my head around Terraform CDK instead of HCL
- - Deploying GKE, I got `GCE_STOCKOUT` error for a couple region before successfully deploying to europe-center2.
- - Setting up a proxy connection to SQL DB from Express pod
+
+- **Navigating GCP**: Transitioning from AWS, different UI & terminologies.
+- **Terraform CDK**: Wrapping my head around Terraform CDK instead of HCL
+- **GKE Deployment**: Encountering `GCE_STOCKOUT` errors in several regions before successfully deploying in `europe-central2` which was time-consuming.
 
  3. If you had an unlimited amount of time to complete this task, what would you have done differently?
 
-- Review GCP resource usages such as:
-   - Design VPC & Network Configuration more carefully (Private/Public)
-   - Permission management around IAM
-   - Explore access control at different points
- - Improve Terraform CDK structure (better construct, stack separation) such as:
-   - tf state file separation
-   - Better terraform resource labeling
- - Improve k8s settings around:
-   - Configure Ingress with domain & TLS
-   - Configure Ingress for ArgoCD
-   - Better configuration & secret management
- - CICD
-   - Better docker image tagging strategy
-   - Better Github action trigger strategy
+#### GCP Enhancements
+- **VPC & Network**: Refine VPC design for better privacy and access control (i.e Private, Public, NAT).
+- **IAM Permissions**: Tighten IAM permissions using least privilege principles.
+- **Access Control**: Strengthen access controls across the infrastructure. (i.e Access Control at different points)
+
+#### Terraform CDK Refinements
+- **State Management**: Separate Terraform state files for improved isolation.
+- **Resource Labeling**: Implement systematic labeling for better resource management.
+
+#### Kubernetes Configuration
+- **Ingress & TLS**: Configure Ingress with custom domains and TLS for secure access.
+- **ArgoCD Access**: Set up secure Ingress for ArgoCD.
+- **Config & Secret Management**: Improve config and secret handling within Kubernetes.
+
+#### CI/CD Optimization
+- **Image Tagging**: Enhance Docker image tagging strategy.
+- **CI/CD Triggers**: Refine GitHub Actions triggers for more efficient workflows.
+
+## Explanation
+
+The current Express server is accessible at http://34.118.111.235:3000.
+
+Endpoints available for testing:
+
+- Base URL: http://34.118.111.235:3000/
+- Health Check: http://34.118.111.235:3000/health
+- Database Connection Test: http://34.118.111.235:3000/db_connection
+
+### Docker
+
+A straightforward `Dockerfile` is located at `/application`. 
+
+The Express server includes a few additional routes for testing purposes:
+
+`/health` for a basic health check.
+`/db_connection` to test the database connection.
+
+### 2. CI/CD
+
+#### CI
+
+The GitHub Actions workflow is set up to:
+
+1. Build the Docker image
+2. Upload it to the Artifact Registry on GCP
+3. UUpdate the image tag in the Helm chart
+
+#### CD
+
+ArgoCD is deployed on the GKE cluster and is configured to:
+
+1. Monitor this repository for changes in the application configuration (`charts/express-app`).
+2. Automatically apply the chart when changes are committed to the main branch.
+
+### 3. Iac
+
+A basic Terraform CDK stack is used to deploy mainly the following resources:
+
+1. VPC network
+2. Service Account
+3. GKE Cluster
+4. Artifact Registry
+5. SQL Database 
