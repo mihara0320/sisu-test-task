@@ -57,7 +57,7 @@ spec:
         - name: cloud-sql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.34
           command: [ "/cloud_sql_proxy",
-                     "-instances=my-project:my-region:my-instance=tcp:5432",
+                     "-instances=tactical-runway-416416:europe-central2:express-sql-instance=tcp:5432",
                      "-credential_file=/secrets/cloudsql/credentials.json" ]
           volumeMounts:
             - name: cloudsql-instance-credentials
