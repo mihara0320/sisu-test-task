@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: express
+    namespace: argocd
+spec:
+    project: default
+    source:
+        repoURL: https://github.com/mihara0320/sisu-test-task.git
+        path: charts/express-app
+        targetRevision: main
+        helm:
+            valueFiles:
+                - values.yaml
+    destination:
+        server: https://kubernetes.default.svc
+        namespace: sisu-app
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            selfHeal: true
+            prune: true
