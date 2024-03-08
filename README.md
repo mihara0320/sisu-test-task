@@ -74,3 +74,4 @@ I kind of got stuck at following points:
    - Better configuration & secret management
  - CICD
    - Better docker image tagging strategy
+   - Better Github action trigger
