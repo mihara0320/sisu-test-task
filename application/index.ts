@@ -43,7 +43,7 @@ app.get('/db_connection', async (req, res) => {
         client.release();
         res.send(`Database connection test successful: ${result.rows[0].now}`);
     } catch (err) {
-        res.status(500).send(`Database connection test failed`);
+        res.status(500).send(`Database connection test failed.`);
     }
 });
 
