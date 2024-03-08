@@ -78,7 +78,10 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
+volumes:
+  - name: cloudsql-instance-credentials
+    secret:
+      secretName: cloudsql-instance-credentials
 # - name: foo
 #   secret:
 #     secretName: mysecret

@@ -8,7 +8,7 @@ const PORT = 3000
 
 const pool = new Pool({
     user: 'express-user',
-    host: '34.116.215.170',
+    host: 'localhost',
     database: 'express-database',
     password: 'securePass',
     port: 5432,

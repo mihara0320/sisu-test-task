@@ -52,6 +52,13 @@ class AppStack extends TerraformStack {
             member: `serviceAccount:${serviceAccount.email}`,
         });
 
+        new ProjectIamMember(this, 'CloudSqlClientRoleBinding', {
+            provider: googleProvider,
+            project: PROJECT_ID,
+            role: 'roles/cloudsql.client',
+            member: `serviceAccount:${serviceAccount.email}`,
+        });
+
         const gkeCluster = new ContainerCluster(this, 'GkeCluster', {
             provider: googleProviderBeta,
             name: 'main-cluster',
