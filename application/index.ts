@@ -36,7 +36,7 @@ app.get('/health', (req, res) => {
     res.status(200);
 });
 
-app.get('/db_test', async (req, res) => {
+app.get('/db_connection', async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT NOW()');
