@@ -40,7 +40,7 @@ app.get('/db_connection', async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT NOW()');
-        client.release(); // Release the client back to the pool
+        client.release();
         res.send(`Database connection test successful: ${result.rows[0].now}`);
     } catch (err) {
         res.status(500).send(`Database connection test failed`);
