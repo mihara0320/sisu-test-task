@@ -8,8 +8,7 @@ spec:
     source:
         repoURL: https://github.com/mihara0320/sisu-test-task.git
         path: charts/express-app
-#        targetRevision: main
-        targetRevision: db
+        targetRevision: main
         helm:
             valueFiles:
                 - values.yaml
