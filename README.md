@@ -54,7 +54,7 @@ Other configuration can be decided by yourself, based on the instance being used
  - Almost a day (8 hours-ish)
 
  2. What was the most difficult task?
-Nothing was very difficult, but I kind of got stuck at following points:
+I kind of got stuck at following points:
  - GCP itself, navigating through GCP console, unfamiliar terminologies.
  - Wrapping my head around Terraform CDK instead of HCL
  - Deploying GKE, I got `GCE_STOCKOUT` error for a couple region before successfully deploying to europe-center2.
