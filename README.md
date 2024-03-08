@@ -51,21 +51,26 @@ Other configuration can be decided by yourself, based on the instance being used
 ## Questions
 
  1. How long did you spend on this assessment in total?\
- _
+ - Almost a day (8 hours-ish)
 
- 2. What was the most difficult task?\
- _ Deploying GKE. GCE_STOCKOUT for GCE_STOCKOUT
+ 2. What was the most difficult task?
+Nothing was very difficult, but I kind of got stuck at following points:
+ - GCP itself, navigating through GCP console, unfamiliar terminologies.
+ - Wrapping my head around Terraform CDK instead of HCL
+ - Deploying GKE, I got `GCE_STOCKOUT` error for a couple region before successfully deploying to europe-center2.
+ - Setting up a proxy connection to SQL DB from Express pod
 
- 3. If you had an unlimited amount of time to complete this task, what would you have done differently?\
- _ ArgoCD access control
- _ test with jest?
- _ split tf state files?
-_ resouce label standard
-_ ingress for argo and app
-_ do better tagging without conflict
+ 3. If you had an unlimited amount of time to complete this task, what would you have done differently?
 
-
-Google Compute Engine: Not all instances running in IGM after 35m15.245488536s. Expected 1, running 0, transitioning 1. Current errors: [GCE_STOCKOUT]: Instance 'gke-gke-cluster-default-pool-4a0e3b16-2fls' creation failed: The zone 'projects/tactical-runway-416416/zones/europe-west1-b' does not have enough resources available to fulfill the request. Try a different zone, or try again later.
-
-europe-north1-a: Google Compute Engine: Not all instances running in IGM after 35m16.099684591s. Expected 1, running 0, transitioning 1. Current errors: [GCE_STOCKOUT]: Instance 'gke-gke-cluster-main-node-pool-aa79f295-4d02' creation failed: The zone 'projects/tactical-runway-416416/zones/europe-north1-a' does not have enough resources available to fulfill the request. Try a different zone, or try again later.; europe-north1-b: Google Compute Engine: Not all instances running in IGM after 35m15.92386356s. Expected 1, running 0, transitioning 1. Current errors: [GCE_STOCKOUT]: Instance 'gke-gke-cluster-main-node-pool-dedc5e6e-2djl' creation failed: The zone 'projects/tactical-runway-416416/zones/europe-north1-b' does not have enough resources available to fulfill the request. Try a different zone, or try again later.; europe-north1-c: Google Compute Engine: Not all instances running in IGM after 35m16.629336777s. Expected 1, running 0, transitioning 1. Current errors: [GCE_STOCKOUT]: Instance 'gke-gke-cluster-main-node-pool-7e07edf8-x5mq' creation failed: The zone 'projects/tactical-runway-416416/zones/europe-north1-c' does not have enough resources available to fulfill the request. Try a different zone, or try again later.
-
+- Review GCP resource usages such as:
+   - Design VPC & Network Configuration more carefully (Private/Public)
+   - Access Control around IAM
+ - Improve Terraform CDK structure (better construct, stack separation) such as:
+   - tf state file separation
+   - Better terraform resource labeling
+ - Improve k8s settings around:
+   - Configure Ingress with domain & TLS
+   - Configure Ingress for ArgoCD
+   - Better configuration & secret management
+ - CICD
+   - Better docker image tagging strategy
