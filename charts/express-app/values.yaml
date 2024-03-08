@@ -7,7 +7,7 @@ replicaCount: 2
 image:
   repository: europe-central2-docker.pkg.dev/tactical-runway-416416/docker-registry/express-app
   pullPolicy: IfNotPresent
-  tag: 31f6a47cd4bc7a61f2ce8f63953ee464f62121aa
+  tag: 7976a5691b7645eec97f2a38bb4d3fa42aaf175c
 
 imagePullSecrets: []
 nameOverride: ""
