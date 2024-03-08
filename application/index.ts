@@ -1,9 +1,18 @@
 import express from 'express'
 import winston from 'winston'
 import expressWinston from 'express-winston'
+import { Pool } from 'pg';
 
 const app = express()
 const PORT = 3000
+
+const pool = new Pool({
+    user: 'express-user',
+    host: 'localhost',
+    database: 'express-database',
+    password: 'securePass',
+    port: 5432,
+});
 
 app.use(
     expressWinston.logger({
@@ -25,6 +34,17 @@ app.get('/', (req, res) => {
 app.get('/health', (req, res) => {
     res.send('OK');
     res.status(200);
+});
+
+app.get('/db_connection', async (req, res) => {
+    try {
+        const client = await pool.connect();
+        const result = await client.query('SELECT NOW()');
+        client.release();
+        res.send(`Database connection test successful: ${result.rows[0].now}`);
+    } catch (err) {
+        res.status(500).send(`Database connection test failed.`);
+    }
 });
 
 app.get('/sisutech/:userId', function (req, res) {

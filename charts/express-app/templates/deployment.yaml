@@ -54,6 +54,16 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+        - name: cloud-sql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.34
+          command: [ "/cloud_sql_proxy",
+                     "-instances=tactical-runway-416416:europe-central2:express-sql-instance=tcp:5432",
+                     "-credential_file=/secrets/cloudsql/credentials.json" ]
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}

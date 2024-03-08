@@ -3,6 +3,7 @@ import {GoogleProvider} from "@cdktf/provider-google/lib/provider";
 import {Construct} from "constructs";
 
 import {Network} from "../../constructs/network";
+import {Database} from "../../constructs/database";
 import {ContainerCluster} from "@cdktf/provider-google/lib/container-cluster";
 import {ServiceAccount} from "@cdktf/provider-google/lib/service-account";
 import {ContainerNodePool} from "@cdktf/provider-google/lib/container-node-pool";
@@ -51,6 +52,13 @@ class AppStack extends TerraformStack {
             member: `serviceAccount:${serviceAccount.email}`,
         });
 
+        new ProjectIamMember(this, 'CloudSqlClientRoleBinding', {
+            provider: googleProvider,
+            project: PROJECT_ID,
+            role: 'roles/cloudsql.client',
+            member: `serviceAccount:${serviceAccount.email}`,
+        });
+
         const gkeCluster = new ContainerCluster(this, 'GkeCluster', {
             provider: googleProviderBeta,
             name: 'main-cluster',
@@ -85,6 +93,17 @@ class AppStack extends TerraformStack {
             provider: googleProviderBeta,
             format: "DOCKER",
             repositoryId: "docker-registry"
+        })
+
+        new Database(this, 'Database', {
+            provider: googleProvider,
+            region: REGION,
+            instanceName: 'express-sql-instance',
+            databaseName: 'express-database',
+            userName: 'express-user',
+            password: process.env.SQL_USER_PASSWORD || 'securePass',
+            databaseVersion: 'POSTGRES_12',
+            tier: 'db-f1-micro',
         })
     }
 }
