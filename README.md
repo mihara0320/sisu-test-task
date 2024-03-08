@@ -64,7 +64,8 @@ I kind of got stuck at following points:
 
 - Review GCP resource usages such as:
    - Design VPC & Network Configuration more carefully (Private/Public)
-   - Access Control around IAM
+   - Permission management around IAM
+   - Explore access control at different points
  - Improve Terraform CDK structure (better construct, stack separation) such as:
    - tf state file separation
    - Better terraform resource labeling
