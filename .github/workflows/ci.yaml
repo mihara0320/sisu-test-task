@@ -3,7 +3,7 @@ name: CD
 on:
   push:
     branches:
-      - main
+      - '**'
 env:
   IMAGE_NAME: express-app
   REGISTRY: europe-central2-docker.pkg.dev
