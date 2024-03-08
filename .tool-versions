@@ -1,0 +1,4 @@
+nodejs 18.19.1
+terraform 1.7.4
+kubectl 1.27.8
+helm 3.13.0
